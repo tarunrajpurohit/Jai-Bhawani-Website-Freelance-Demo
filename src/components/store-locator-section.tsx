@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "motion/react";
 import { ArrowUpRight, MapPin } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -73,11 +74,15 @@ export function StoreLocatorSection() {
                   return (
                     <TabsContent key={region} value={region} className="mt-0 h-full">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 content-start">
-                        {filtered.map((loc) => (
-                          <Card
+                        {filtered.map((loc, idx) => (
+                          <motion.div
                             key={loc.city}
-                            className="bg-white text-black border-none rounded-[14px] shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5"
+                            initial={{ opacity: 0, y: 16 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.35, delay: idx * 0.04 }}
+                            whileHover={{ y: -4, scale: 1.015 }}
                           >
+                            <Card className="bg-white text-black border-none rounded-[14px] shadow-sm hover:shadow-lg transition-shadow duration-200 h-full">
                             <CardContent className="p-3.5 sm:px-4 sm:py-3.5 flex items-center justify-between gap-3">
                               <div className="min-w-0">
                                 <div className="flex items-center gap-2">
@@ -120,6 +125,7 @@ export function StoreLocatorSection() {
                               )}
                             </CardContent>
                           </Card>
+                          </motion.div>
                         ))}
 
                         {region === "All" && (

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight, Sparkles } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -31,7 +32,6 @@ export function MenuCategoriesSection() {
       />
 
       <div className="relative z-10 w-[92%] sm:w-[80%] mx-auto">
-        {/* Compact Split Header */}
         <Reveal>
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-7">
             <div>
@@ -53,10 +53,9 @@ export function MenuCategoriesSection() {
           </div>
         </Reveal>
 
-        {/* Compact Split Spotlight + 4x3 Bento Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-          {/* Left: Compact Featured Category Spotlight */}
-          <div className="lg:col-span-5">
+          {/* Left: Spring-Animated Featured Category Spotlight */}
+          <Reveal direction="left" className="lg:col-span-5">
             <Card className="h-full bg-[#012973] text-white border-none rounded-[20px] shadow-xl overflow-hidden relative flex flex-col justify-between">
               <div
                 className="pointer-events-none absolute inset-0 opacity-15 bg-cover bg-center"
@@ -75,75 +74,103 @@ export function MenuCategoriesSection() {
                   </div>
 
                   <div className="h-[180px] sm:h-[220px] flex items-center justify-center my-2">
-                    <img
-                      key={activeItem.image}
-                      src={activeItem.image}
-                      alt={activeItem.title}
-                      className="max-h-[205px] w-auto object-contain drop-shadow-[0_16px_24px_rgba(0,0,0,0.45)] animate-float-slow"
-                    />
+                    <AnimatePresence mode="wait">
+                      <motion.img
+                        key={activeItem.image}
+                        src={activeItem.image}
+                        alt={activeItem.title}
+                        initial={{ opacity: 0, scale: 0.78, rotate: -6, y: 18 }}
+                        animate={{ opacity: 1, scale: 1, rotate: 0, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.85, rotate: 4, y: -12 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 260,
+                          damping: 20,
+                        }}
+                        className="max-h-[205px] w-auto object-contain drop-shadow-[0_16px_24px_rgba(0,0,0,0.45)]"
+                      />
+                    </AnimatePresence>
                   </div>
                 </div>
 
-                <div className="mt-2">
-                  <h4 className="font-heading font-medium text-[28px] sm:text-[34px] leading-[1.05] tracking-[1px] text-white mb-2">
-                    {activeItem.title}
-                  </h4>
-                  <p className="font-sans text-sm sm:text-base leading-[22px] text-white/85 mb-4 line-clamp-2">
-                    {activeItem.description}
-                  </p>
-                  <Button
-                    nativeButton={false}
-                    render={<a href={activeItem.href} />}
-                    className="rounded-full bg-[#ffed00] hover:bg-white text-[#212121] font-sans font-bold uppercase tracking-wider text-xs sm:text-sm px-6 py-3 h-auto transition-colors duration-300"
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeItem.title}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.3 }}
+                    className="mt-2"
                   >
-                    Order {activeItem.title}
-                    <ArrowUpRight className="ml-1.5 h-4 w-4" />
-                  </Button>
-                </div>
+                    <h4 className="font-heading font-medium text-[28px] sm:text-[34px] leading-[1.05] tracking-[1px] text-white mb-2">
+                      {activeItem.title}
+                    </h4>
+                    <p className="font-sans text-sm sm:text-base leading-[22px] text-white/85 mb-4 line-clamp-2">
+                      {activeItem.description}
+                    </p>
+                    <Button
+                      nativeButton={false}
+                      render={<a href={activeItem.href} />}
+                      className="rounded-full bg-[#ffed00] hover:bg-white text-[#212121] font-sans font-bold uppercase tracking-wider text-xs sm:text-sm px-6 py-3 h-auto transition-colors duration-300"
+                    >
+                      Order {activeItem.title}
+                      <ArrowUpRight className="ml-1.5 h-4 w-4" />
+                    </Button>
+                  </motion.div>
+                </AnimatePresence>
               </CardContent>
             </Card>
-          </div>
+          </Reveal>
 
-          {/* Right: Compact 4x3 Interactive Tile Grid */}
+          {/* Right: Interactive 4x3 Tile Grid with Spring Hover */}
           <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5">
             {MENU_CATEGORIES.map((item, idx) => {
               const isActive = idx === selectedIdx;
               return (
-                <Card
+                <motion.div
                   key={item.title}
-                  onClick={() => setSelectedIdx(idx)}
-                  className={`group cursor-pointer rounded-[14px] transition-all duration-200 overflow-hidden ${
-                    isActive
-                      ? "bg-white border-2 border-[#012973] shadow-md"
-                      : "bg-[#fefeff] border border-[#e7edf3] hover:border-[#012973]/40 hover:shadow-sm"
-                  }`}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  transition={{ duration: 0.45, delay: idx * 0.03 }}
+                  whileHover={{ y: -5, scale: 1.03 }}
+                  whileTap={{ scale: 0.96 }}
                 >
-                  <CardContent className="p-2.5 flex flex-col items-center text-center h-full justify-between">
-                    <div className="w-full flex items-center justify-end">
-                      <span
-                        className={`size-2 rounded-full transition-colors ${
-                          isActive ? "bg-[#012973]" : "bg-[#e7edf3]"
+                  <Card
+                    onClick={() => setSelectedIdx(idx)}
+                    className={`group cursor-pointer rounded-[14px] h-full transition-colors duration-200 overflow-hidden ${
+                      isActive
+                        ? "bg-white border-2 border-[#012973] shadow-lg"
+                        : "bg-[#fefeff] border border-[#e7edf3] hover:border-[#012973]/40 hover:shadow-md"
+                    }`}
+                  >
+                    <CardContent className="p-2.5 flex flex-col items-center text-center h-full justify-between">
+                      <div className="w-full flex items-center justify-end">
+                        <span
+                          className={`size-2 rounded-full transition-colors ${
+                            isActive ? "bg-[#012973]" : "bg-[#e7edf3]"
+                          }`}
+                        />
+                      </div>
+
+                      <div className="h-[74px] flex items-center justify-center my-1">
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="max-h-[68px] w-auto object-contain transition-transform duration-300 group-hover:scale-110"
+                        />
+                      </div>
+
+                      <h5
+                        className={`font-heading font-medium text-[14px] sm:text-[15px] leading-tight mt-1 transition-colors ${
+                          isActive ? "text-[#012973]" : "text-black"
                         }`}
-                      />
-                    </div>
-
-                    <div className="h-[74px] flex items-center justify-center my-1">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="max-h-[68px] w-auto object-contain transition-transform duration-300 group-hover:scale-110"
-                      />
-                    </div>
-
-                    <h5
-                      className={`font-heading font-medium text-[14px] sm:text-[15px] leading-tight mt-1 transition-colors ${
-                        isActive ? "text-[#012973]" : "text-black"
-                      }`}
-                    >
-                      {item.title}
-                    </h5>
-                  </CardContent>
-                </Card>
+                      >
+                        {item.title}
+                      </h5>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               );
             })}
           </div>

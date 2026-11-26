@@ -40,9 +40,9 @@ export interface HeroShowcaseSlide {
 export const HERO_SHOWCASE_SLIDES: HeroShowcaseSlide[] = [
   {
     id: "street-classics",
-    tabLabel: "01. Street Classics (Video)",
+    tabLabel: "01. Street Classics",
     mediaType: "video",
-    videoSrc: "/assets/videos/food-1.mp4",
+    videoSrc: "/assets/videos/vadapav.mp4",
     posterSrc: "/assets/img/jaybhavani-main-banner-1.jpg",
     eyebrow: "AUTHENTIC INDIAN STREET FOOD • USA",
     title: "VADAPAV BOLE TO JAY BHAVANI",
@@ -58,7 +58,7 @@ export const HERO_SHOWCASE_SLIDES: HeroShowcaseSlide[] = [
         description:
           "Crispy spiced potato patty tucked into butter-toasted pav with fiery red garlic chutney.",
         image: "/assets/img/food-menu/vadapav.png",
-        video: "/assets/videos/food-1.mp4",
+        video: "/assets/videos/vadapav.mp4",
       },
       {
         id: "dabeli",
@@ -67,7 +67,7 @@ export const HERO_SHOWCASE_SLIDES: HeroShowcaseSlide[] = [
         description:
           "Roasted peanuts, pomegranate pearls, sev, and authentic Kutchi masala grilled in butter.",
         image: "/assets/img/food-menu/dabeli.png",
-        video: "/assets/videos/food-2.mp4",
+        video: "/assets/videos/dabeli.mp4",
       },
       {
         id: "puff",
@@ -76,14 +76,15 @@ export const HERO_SHOWCASE_SLIDES: HeroShowcaseSlide[] = [
         description:
           "Flaky golden puff pastry stuffed with smoky Indo-Chinese veggies or spiced paneer.",
         image: "/assets/img/food-menu/puff.png",
-        video: "/assets/videos/food-3.mp4",
+        video: "/assets/videos/puff.mp4",
       },
     ],
   },
   {
     id: "tawa-specials",
-    tabLabel: "02. Tawa & Sandwiches (Photo)",
-    mediaType: "image",
+    tabLabel: "02. Tawa & Sandwiches",
+    mediaType: "video",
+    videoSrc: "/assets/videos/bhaji-pav.mp4",
     posterSrc: "/assets/img/jaybhavani-main-banner-2.jpg",
     eyebrow: "SIZZLING TAWA SPECIALTIES • USA",
     title: "BOMBAY GRILLS & BHAJI PAV",
@@ -99,6 +100,7 @@ export const HERO_SHOWCASE_SLIDES: HeroShowcaseSlide[] = [
         description:
           "Rich, slow-simmered vegetable bhaji topped with melting butter and pillowy toasted pav.",
         image: "/assets/img/food-menu/bhaji-pav.png",
+        video: "/assets/videos/bhaji-pav.mp4",
       },
       {
         id: "sandwich",
@@ -107,6 +109,7 @@ export const HERO_SHOWCASE_SLIDES: HeroShowcaseSlide[] = [
         description:
           "Mint chutney, spiced potato, crisp veggies, and melted cheese grilled to golden perfection.",
         image: "/assets/img/food-menu/sandwich.png",
+        video: "/assets/videos/sandwich.mp4",
       },
       {
         id: "maskabun",
@@ -115,14 +118,15 @@ export const HERO_SHOWCASE_SLIDES: HeroShowcaseSlide[] = [
         description:
           "Soft sweet bun generously slathered with whipped butter and house spice blend.",
         image: "/assets/img/food-menu/maskabun.png",
+        video: "/assets/videos/maskabun.mp4",
       },
     ],
   },
   {
     id: "global-feast",
-    tabLabel: "03. Dosas & Shakes (Video)",
+    tabLabel: "03. Dosas & Shakes",
     mediaType: "video",
-    videoSrc: "/assets/videos/food-2.mp4",
+    videoSrc: "/assets/videos/dosa.mp4",
     posterSrc: "/assets/img/jaybhavani-main-banner-3.jpg",
     eyebrow: "ALL-DAY CRAVINGS • USA",
     title: "DOSAS, PULAV & SHAKES",
@@ -138,7 +142,7 @@ export const HERO_SHOWCASE_SLIDES: HeroShowcaseSlide[] = [
         description:
           "Paper-thin fermented crepe served with aromatic sambar and fresh coconut chutney.",
         image: "/assets/img/food-menu/south-indian.png",
-        video: "/assets/videos/food-2.mp4",
+        video: "/assets/videos/dosa.mp4",
       },
       {
         id: "pulav",
@@ -147,7 +151,7 @@ export const HERO_SHOWCASE_SLIDES: HeroShowcaseSlide[] = [
         description:
           "Fragrant basmati rice tossed on a hot tawa with roasted spices, peas, and paneer.",
         image: "/assets/img/food-menu/pulav.png",
-        video: "/assets/videos/food-3.mp4",
+        video: "/assets/videos/pulav.mp4",
       },
       {
         id: "milkshake",
@@ -156,7 +160,7 @@ export const HERO_SHOWCASE_SLIDES: HeroShowcaseSlide[] = [
         description:
           "Rich, decadent milkshakes and fresh-pressed juices to pair with your spicy favorites.",
         image: "/assets/img/food-menu/milkshake.png",
-        video: "/assets/videos/food-1.mp4",
+        video: "/assets/videos/milkshake.mp4",
       },
     ],
   },

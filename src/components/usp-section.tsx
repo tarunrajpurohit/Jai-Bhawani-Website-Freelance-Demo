@@ -26,8 +26,8 @@ export function UspSection() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
           {USP_ITEMS.map((item, idx) => (
-            <Reveal key={item.title} delayMs={idx * 80}>
-              <Card className="group h-full bg-white border border-[#e7edf3] hover:border-[#012973] rounded-[20px] shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5">
+            <Reveal key={item.title} delayMs={idx * 90} direction="scale">
+              <Card className="group h-full bg-white border border-[#e7edf3] hover:border-[#012973] rounded-[20px] shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-2.5">
                 <CardContent className="p-6 flex flex-col justify-between h-full">
                   <div>
                     <div className="flex items-center justify-between mb-5">

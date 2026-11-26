@@ -18,7 +18,7 @@ export function TwentyFiveYearsSection() {
         <Reveal>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Left: Framed Editorial Image */}
-            <div className="lg:col-span-5">
+            <Reveal direction="left" className="lg:col-span-5">
               <div className="relative rounded-[24px] overflow-hidden shadow-xl aspect-[4/3] lg:aspect-[4/4.2]">
                 <img
                   src="/assets/img/25-years.jpg"
@@ -31,10 +31,10 @@ export function TwentyFiveYearsSection() {
                   </Badge>
                 </div>
               </div>
-            </div>
+            </Reveal>
 
             {/* Right: Story + 4 Milestone Stat Cards */}
-            <div className="lg:col-span-7">
+            <Reveal direction="right" className="lg:col-span-7">
               <p className="font-sans font-bold text-xs uppercase tracking-[0.2em] text-[#012973] mb-2">
                 Our Global Journey
               </p>
@@ -77,7 +77,7 @@ export function TwentyFiveYearsSection() {
                 Explore USA Franchise
                 <ArrowUpRight className="ml-1.5 h-4 w-4" />
               </Button>
-            </div>
+            </Reveal>
           </div>
         </Reveal>
       </div>

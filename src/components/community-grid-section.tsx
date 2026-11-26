@@ -40,8 +40,8 @@ export function CommunityGridSection() {
         {/* Clean Symmetrical 4x2 Bento Gallery */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5 md:gap-4">
           {COMMUNITY_PHOTOS.map((photo, idx) => (
-            <Reveal key={photo.id} delayMs={idx * 45}>
-              <div className="group relative overflow-hidden rounded-[18px] aspect-[4/3] bg-black/5 shadow-sm hover:shadow-xl transition-all duration-300">
+            <Reveal key={photo.id} delayMs={idx * 55} direction="scale">
+              <div className="group relative overflow-hidden rounded-[18px] aspect-[4/3] bg-black/5 shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-1.5">
                 <img
                   src={photo.src}
                   alt={photo.alt}

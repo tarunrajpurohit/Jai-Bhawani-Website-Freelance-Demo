@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowLeft, ArrowRight, Play, Sparkles } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { ArrowLeft, ArrowRight, Play } from "lucide-react";
 import {
   Carousel,
   CarouselApi,
@@ -16,49 +17,53 @@ import { HERO_SHOWCASE_SLIDES, HeroShowcaseSlide } from "@/data/site-data";
 function HeroSlideContent({ slide }: { slide: HeroShowcaseSlide }) {
   const [activeFoodIdx, setActiveFoodIdx] = useState(0);
   const activeFood = slide.foods[activeFoodIdx] ?? slide.foods[0];
-  const activeVideo =
-    slide.mediaType === "video" ? activeFood?.video ?? slide.videoSrc : undefined;
+  const activeVideo = activeFood?.video ?? slide.videoSrc;
 
   return (
     <div className="relative w-full min-h-[calc(100dvh-84px)] lg:min-h-0 lg:h-full flex items-end lg:items-center pt-24 pb-6 md:pt-28 md:pb-10 px-4 sm:px-8 lg:px-12 overflow-hidden bg-black">
-      {/* Background Video or Image */}
-      {slide.mediaType === "video" && activeVideo ? (
-        <video
-          key={activeVideo}
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster={slide.posterSrc}
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
-        >
-          <source src={activeVideo} type="video/mp4" />
-        </video>
-      ) : (
-        <div
-          className="absolute inset-0 w-full h-full bg-cover bg-center"
-          style={{ backgroundImage: `url(${slide.posterSrc})` }}
-        />
-      )}
+      {/* Product-Specific Background Video with Smooth Crossfade & Slow Zoom */}
+      <AnimatePresence mode="wait">
+        {activeVideo && (
+          <motion.div
+            key={activeVideo}
+            initial={{ opacity: 0, scale: 1.07 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute inset-0 w-full h-full"
+          >
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              poster={slide.posterSrc}
+              className="w-full h-full object-cover"
+            >
+              <source src={activeVideo} type="video/mp4" />
+            </video>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Clean cinematic gradient */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/25" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/30" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-black/25 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none" />
 
       <div className="relative z-10 max-w-[1220px] mx-auto w-full flex flex-col lg:flex-row lg:items-end justify-between gap-10">
-        {/* Left: Clean Editorial Headline & CTA */}
-        <div className="max-w-2xl text-white animate-fade-slide-up">
-          <div className="flex items-center gap-3 mb-4">
+        {/* Left: Animated Editorial Headline & CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-2xl text-white"
+        >
+          <div className="flex flex-wrap items-center gap-3 mb-4">
             <Badge className="rounded-full bg-[#ffed00] text-[#212121] hover:bg-[#ffed00] font-sans font-bold uppercase tracking-wider px-3 py-1 text-[11px]">
-              {slide.mediaType === "video" ? (
-                <span className="flex items-center gap-1.5">
-                  <Play className="h-3 w-3 fill-current" /> Video Showcase
-                </span>
-              ) : (
-                <span className="flex items-center gap-1.5">
-                  <Sparkles className="h-3 w-3" /> USA Signature
-                </span>
-              )}
+              <span className="flex items-center gap-1.5">
+                <Play className="h-3 w-3 fill-current" />{" "}
+                {activeFood?.name ?? "Video Showcase"}
+              </span>
             </Badge>
             <span className="font-sans font-semibold text-xs sm:text-sm tracking-[0.2em] uppercase text-white/80">
               {slide.eyebrow}
@@ -69,30 +74,48 @@ function HeroSlideContent({ slide }: { slide: HeroShowcaseSlide }) {
             {slide.title}
           </h1>
 
-          <p className="font-sans text-base sm:text-lg leading-[26px] text-white/85 max-w-xl mb-5">
-            {slide.subtitle}
-          </p>
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={activeFood?.id ?? slide.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.35 }}
+              className="font-sans text-base sm:text-lg leading-[26px] text-white/85 max-w-xl mb-5"
+            >
+              {activeFood?.description ?? slide.subtitle}
+            </motion.p>
+          </AnimatePresence>
 
           <div className="flex flex-wrap items-center gap-3.5">
-            <Button
-              nativeButton={false}
-              render={<a href={slide.ctaHref} />}
-              className="rounded-full bg-[#012973] hover:bg-[#ffed00] hover:text-[#212121] text-white font-sans font-bold uppercase tracking-wider text-sm px-6 py-3 h-auto transition-colors duration-300"
-            >
-              {slide.ctaLabel}
-            </Button>
-            <OnlineOrderDialog className="bg-white text-black hover:bg-[#ffed00] hover:text-[#212121] text-sm px-6 py-3" />
+            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
+              <Button
+                nativeButton={false}
+                render={<a href={slide.ctaHref} />}
+                className="rounded-full bg-[#012973] hover:bg-[#ffed00] hover:text-[#212121] text-white font-sans font-bold uppercase tracking-wider text-sm px-6 py-3 h-auto transition-colors duration-300 shadow-lg"
+              >
+                {slide.ctaLabel}
+              </Button>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
+              <OnlineOrderDialog className="bg-white text-black hover:bg-[#ffed00] hover:text-[#212121] text-sm px-6 py-3 shadow-lg" />
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Right: Minimal Compact Food Switcher Dock */}
-        <div className="lg:max-w-[380px] w-full">
-          <div className="rounded-2xl bg-black/55 backdrop-blur-md border border-white/15 p-3.5">
+        {/* Right: Animated Product Video Switcher Dock */}
+        <motion.div
+          initial={{ opacity: 0, x: 32 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.75, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          className="lg:max-w-[390px] w-full"
+        >
+          <div className="rounded-2xl bg-black/60 backdrop-blur-md border border-white/20 p-3.5 shadow-2xl">
             <div className="flex items-center justify-between px-1 mb-2.5">
-              <span className="font-sans font-bold text-[11px] uppercase tracking-[0.18em] text-[#ffed00]">
+              <span className="font-sans font-bold text-[11px] uppercase tracking-[0.18em] text-[#ffed00] truncate">
                 {activeFood?.name}
               </span>
-              <span className="font-sans text-[11px] text-white/65 uppercase tracking-wider">
+              <span className="font-sans text-[11px] text-white/70 uppercase tracking-wider shrink-0 ml-2">
                 {activeFood?.tag}
               </span>
             </div>
@@ -101,11 +124,13 @@ function HeroSlideContent({ slide }: { slide: HeroShowcaseSlide }) {
               {slide.foods.map((food, idx) => {
                 const isSelected = idx === activeFoodIdx;
                 return (
-                  <button
+                  <motion.button
                     key={food.id}
                     type="button"
+                    whileHover={{ y: -3, scale: 1.03 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => setActiveFoodIdx(idx)}
-                    className={`group flex flex-col items-center text-center rounded-xl p-2 transition-all duration-200 cursor-pointer border ${
+                    className={`relative group flex flex-col items-center text-center rounded-xl p-2 transition-colors duration-200 cursor-pointer border ${
                       isSelected
                         ? "bg-white text-black border-[#ffed00] shadow-md"
                         : "bg-white/10 text-white border-transparent hover:bg-white/20"
@@ -119,12 +144,12 @@ function HeroSlideContent({ slide }: { slide: HeroShowcaseSlide }) {
                     <span className="font-sans font-bold text-[11px] leading-tight line-clamp-1">
                       {food.name.split(" ")[0]}
                     </span>
-                  </button>
+                  </motion.button>
                 );
               })}
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
